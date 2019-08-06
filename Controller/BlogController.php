@@ -56,9 +56,11 @@ class BlogController extends AbstractController
 
     /**
      * @Route("/post/{slug}",name="blog_by_slug")
+     * the below annotation is nor required when $post is typehinted with blogpost
+     * and route parameter name matches any field on the BlogPost entity
      * @ParamConverter("post", class="App:BlogPost", options={"mapping":{"slug":"slug"}})
      */
-    public function postBySlug($post) {
+    public function postBySlug(BlogPost $post) {
         //same as $this->getDoctrine()->getRepository(BlogPost::class)->findOneBy(['slug'=>$slug])
         return $this->json($post);
     }
