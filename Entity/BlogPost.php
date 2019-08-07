@@ -3,7 +3,9 @@
 namespace App\Entity;
 
 use ApiPlatform\Core\Annotation\ApiResource;
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
+use mysql_xdevapi\Collection;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\BlogPostRepository")
@@ -43,7 +45,19 @@ class BlogPost
      */
     private $slug;
 
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Comment",mappedBy="blogPost")
+     */
+    private $comments;
 
+    public function __construct()
+    {
+        $this->comments = new ArrayCollection();
+    }
+    public function getComments(): ArrayCollection
+    {
+        return $this->comments;
+    }
     public function getId(): ?int
     {
         return $this->id;
